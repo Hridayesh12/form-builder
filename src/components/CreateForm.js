@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useNavigate } from 'react-router-dom';
 const CreateForm = () => {
+    let navigation = useNavigate();
     const [questions, setQuestions] = useState([
         { question: '', type: 'Category', quests: [] },
     ]);
@@ -27,6 +29,7 @@ const CreateForm = () => {
             });
             const data = await res.json();
             alert("Form Saved");
+            navigation("/view_form")
         }
         catch (error) {
             console.log(error);
