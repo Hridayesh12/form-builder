@@ -9,7 +9,8 @@ const ViewForm = () => {
         fetch(`https://form-builder-backend-lzm0.onrender.com/getForm/${_id}`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data); setForm(data['Success'])
+                // console.log(data); 
+                setForm(data['Success'])
             })
     }, [])
     return (
