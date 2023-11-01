@@ -9,12 +9,13 @@ const ViewForm = () => {
         fetch(`https://form-builder-backend-lzm0.onrender.com/getForm/${_id}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data); setForm(data['Success'])
+                // console.log(data); setForm(data['Success'])
             })
     }, [])
     return (
         <div className='w-full h-full flex flex-col'>
             <div className="w-full flex flex-col justify-center p-10">
+                <img src={form.formImg} />
                 <h1 className="text-xl text-gray-900">{form.formTitle}</h1>
                 <hr className="w-full border-2 border-gray-900" />
                 <h1 className="text-lg text-gray-900">{form.formDescription}</h1>
@@ -48,26 +49,26 @@ const Type1 = ({ quesionId, quesion }) => {
         let temp = quesion?.quests;
         let temp1 = [...categories];
         let temp2 = [...items];
-        console.log(temp);
+        // console.log(temp);
         for (let i = 0; i < temp.length; i++) {
             temp1[i] = temp[i].category;
             temp2[i] = temp[i].item;
         }
         temp1 = Array.from(new Set(temp1));
         temp2 = Array.from(new Set(temp2));
-        console.log(temp1, temp2);
+        // console.log(temp1, temp2);
         setCategories(temp1);
         setItems(temp2);
         main.cats = [];
         for (let i = 0; i < temp1.length; i++) {
             main.cats.push({ id: i, name: temp1[i], things: [] });
         }
-        console.log(main);
+        // console.log(main);
         setArr(main);
     }, []);
     return (
         <DragDropContext onDragEnd={(params) => {
-            console.log(params);
+            // console.log(params);
             let arrayId = parseInt(params.source.droppableId.slice(-1));
             let destinationId = parseInt(params.destination.droppableId.slice(-1));
             let srcI = params.source.index;
@@ -88,6 +89,14 @@ const Type1 = ({ quesionId, quesion }) => {
                 <h1 className="text-xl underline text-gray-900 my-5">Question {quesionId + 1}</h1>
                 <hr className="w-full border-2 border-gray-900" />
                 <h1 className="text-xl text-gray-900">{arr.question}</h1>
+                {quesion?.questImg?.length > 0 && (
+                    <div className='flex w-full gap-2'>
+                        <img
+                            className="w-[60%]"
+                            src={quesion?.questImg}
+                        />
+                    </div>
+                )}
                 <Droppable droppableId='droppable-1'>
                     {(provided, _) => (
                         <div className='flex flex-col justify-around gap-2 w-full' ref={provided.innerRef} {...provided.droppableProps}>
@@ -163,19 +172,27 @@ const Type2 = ({ quesionId, quesion }) => {
         <div className="p-5 my-5 w-full sm:w-10/12 mx-auto flex flex-col justify-around gap-3 bg-white container rounded-lg ">
             <h1 className="text-xl underline text-gray-900 my-5">Question {quesionId + 1}</h1>
             <hr className="w-full border-2 border-gray-900" />
+            {quesion?.questImg?.length > 0 && (
+                <div className='flex w-full gap-2'>
+                    <img
+                        className="w-[60%]"
+                        src={quesion?.questImg}
+                    />
+                </div>
+            )}
             <DragDropContext onDragEnd={(params) => {
-                console.log(params);
+                // console.log(params);
                 let arrayId = 'k';
                 let destinationId = parseInt(params.destination.droppableId.slice(-1));
                 let srcI = params.source.index;
                 let destI = params.destination.index;
-                console.log(arrayId, destinationId, srcI);
+                // console.log(arrayId, destinationId, srcI);
                 let temp = [...arrd.quests];
                 let temp1 = [...fillUps];
                 if (arrayId === 'k') {
                     temp1[srcI] = temp[srcI];
                     temp[srcI] = 'k';
-                    console.log(temp, temp1);
+                    // console.log(temp, temp1);
                     setArrd({ ...arrd, quests: temp });
                     setFillUps(temp1);
                 }
@@ -242,12 +259,20 @@ const Type2 = ({ quesionId, quesion }) => {
 }
 
 const Type3 = ({ quesionId, quesion }) => {
-    console.log("Hello", quesion)
+    // console.log("Hello", quesion)
     return (
         <div className="p-5 my-5 w-full sm:w-10/12 mx-auto flex flex-col justify-around gap-3 bg-white container rounded-lg ">
             <h1 className="text-xl underline text-gray-900 my-5">Question {quesionId + 1}</h1>
             <hr className="w-full border-2 border-gray-900" />
             <textarea value={quesion.question} className='w-full text-md p-2 border-2 border-gray-300 rounded-lg' disabled></textarea>
+            {quesion?.questImg?.length > 0 && (
+                <div className='flex w-full gap-2'>
+                    <img
+                        className="w-[60%]"
+                        src={quesion?.questImg}
+                    />
+                </div>
+            )}
             <div className='my-5 bg-blue-300 p-2 rounded-lg mx-auto flex items-center justify-center w-3/12'>MCQs</div>
             {quesion?.quests?.map((item, index) => (
                 <div className='rounded-lg w-10/12 mx-auto border-2 border-gray-300 p-10 flex items-center justify-center flex-col'>
